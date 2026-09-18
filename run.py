@@ -5,6 +5,8 @@ together.
 Run with:
     python run.py
 """
+import os
+
 import uvicorn
 
 from app.agents.scheduler_agent import SchedulerAgent
@@ -18,7 +20,11 @@ def main() -> None:
     scheduler = SchedulerAgent()
     scheduler.start()
     try:
-        uvicorn.run(app, host="0.0.0.0", port=8000)
+        uvicorn.run(
+            app,
+            host="0.0.0.0",
+            port=int(os.getenv("PORT", "8000")),
+        )
     finally:
         scheduler.shutdown()
 
